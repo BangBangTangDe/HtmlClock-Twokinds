@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数码管时钟</title>
+    <style>
+        .ledback
+        {
+            background: url("./imgs/LED.png") 0px 0px no-repeat;
+            background-size: 100% 100%;
+            width: 742px;
+            height:300px;
+            margin: auto;
+        }
+        .top1{
+            width: 100%;
+            height: 20%;
+            /*background-color: crimson;*/
+            /*opacity: 0.5;*/
+        }
+          .time{
+            width: 100%;
+            height: 42%;
+            /*background-color: yellow;*/
+            /*opacity: 0.5;*/
+            text-align: center;
+        }
+          .time>div{
+              display: inline-block;
+              transform: skewX(-10deg);
+          }
+          .time>div:nth-of-type(3),.time>div:nth-of-type(6){
+               width:20px;
+               height:100px; 
+               background:url("./imgs/dot.png") -53px -7px no-repeat;
+          }
+           .timenum{
+               width:50px;
+               height:100px;
+               background:url("./imgs/countdown8.png") -37px -7px no-repeat;
+        }
+          .date{
+            width: 100%;
+            height: 30%;
+            /*background-color: dimgrey;*/
+            /*opacity: 0.5;*/
+            text-align: center;
+        }
+        .date>div{
+            display: inline-block;
+            font-size: 50px;
+            transform:skew(-10deg);
+            vertical-align: middle;
+            color: white;
+        }
+        .datenum {
+            width: 40px;
+            height: 66px;
+            background:  url(./imgs/countdown8.png) 0px 3px no-repeat;
+            background-size: 100% 100%;
+        }
+    </style>
+    <script src="js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+        })
+        function change2image(timeval,classname,idx0,idx1) {
+            var sec0=timeval%10;
+            var sec1=Math.floor(timeval/10);
+            $(classname).eq(idx0).css({
+                "background-image":'url(./imgs/countdown'+sec0+'.png)'
+            })
+            $(classname).eq(idx1).css({
+                "background-image":'url(./imgs/countdown'+sec1+'.png)'
+            })
+        }
+        function change() {
+            var now=new Date();
+            change2image(now.getSeconds(),".timenum",5,4);
+            change2image(now.getMinutes(),".timenum",3,2);
+            change2image(now.getHours(),".timenum",1,0);
+            change2image(now.getMonth()+1,".datenum",5,4);
+            change2image(now.getDate(),".datenum",7,6);
+            change2image(now.getHours(),".timenum",1,0);
+
+            var sec0=now.getDay();
+            if(sec0==0)
+            {
+                sec0=7;
+            }
+            $(".datenum").eq(8).css({
+                "background-image":'url(./imgs/countdown'+sec0+'.png)'
+            })
+
+
+
+            //年份
+            var val0=now.getFullYear();
+            var x0=val0%10;
+            var x1=Math.floor((val0/10)%10);
+            var x2=Math.floor((val0/100)%10);
+            var x3=Math.floor((val0/1000));
+
+            $(".datenum").eq(3).css({
+                "background-image":'url(./imgs/countdown'+x0+'.png)'
+            })
+            $(".datenum").eq(2).css({
+                "background-image":'url(./imgs/countdown'+x1+'.png)'
+            })
+            $(".datenum").eq(1).css({
+                "background-image":'url(./imgs/countdown'+x2+'.png)'
+            })
+             $(".datenum").eq(0).css({
+                "background-image":'url(./imgs/countdown'+x3+'.png)'
+            })
+        }
+        setInterval("change()",1000);
+    </script>
+</head>
+<body>
+<div class="ledback">
+    <div class="top1"></div>
+    <div class="time">
+        <div class="timenum"></div>
+        <div class="timenum"></div>
+        <div class=""></div>
+        <div class="timenum"></div>
+        <div class="timenum"></div>
+        <div class=""></div>
+        <div class="timenum"></div>
+        <div class="timenum"></div>
+        
+    </div>
+    <div class="date">
+        <div class="datenum"></div>
+        <div class="datenum"></div>
+        <div class="datenum"></div>
+        <div class="datenum"></div>
+        <div>年</div>
+        <div class="datenum"></div>
+        <div class="datenum"></div>
+        <div>月</div>
+        <div class="datenum"></div>
+        <div class="datenum"></div>
+        <div>日</div>
+        <div >星期</div>
+        <div class="datenum"></div>
+    </div>
+</div>
+
+
+</body>
+</html>

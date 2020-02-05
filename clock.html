@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>clock</title>
+    <style type="text/css">
+        *{
+            padding: 0px;
+            margin: 0px;
+        }
+        #clock{
+            width: 800px;
+            height:800px;
+            margin: auto;
+            border:1px solid red;
+            background:url("./imgs/timg.png") 0px 0px no-repeat;
+            background-size: 100% 100%;
+            position: relative;
+        }
+        .second {
+            width: 39px;
+            height: 300px;
+            background: url(./imgs/pointer.png) -9px 0px no-repeat;
+            background-size: 500% 100%;
+            position: absolute;
+            left: 383px;
+            top: 186px;
+            opacity: 0.5;
+            transform-origin: 18.5px 224px;
+        }
+        .minute{
+            width: 39px;
+            height: 300px;
+            background: url(./imgs/pointer.png) -78px 1px no-repeat;
+            background-size: 500% 100%;
+            position: absolute;
+            left: 383px;
+            top: 186px;
+            opacity: 0.5;
+            transform-origin: 18.5px 224px;
+
+        }
+        .hour{
+            width: 39px;
+            height: 300px;
+            background: url(./imgs/pointer.png) -141px 2px no-repeat;
+            background-size: 500% 100%;
+            position: absolute;
+            left: 383px;
+            top: 186px;
+            opacity: 0.5;
+            transform-origin: 18.5px 224px;
+        }
+        .sec_head{
+            width:50px;
+            height:50px;
+            background: url("./imgs/dog.jpg") 0px 0px no-repeat;
+            background-size: 100% 100%;
+            position: absolute;
+            left:0px;
+            top: 86px;
+            border-radius: 50%;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var secdegre=0;
+        var minutedeg=0;
+        var hourdeg=0;
+        function bodyload() {
+            //秒针旋转角度
+            var now=new Date();
+            var sec =now.getSeconds();
+            secdegre=sec*6;
+            //分针旋转角度
+            var min=now.getMinutes();
+            console.log(min);
+            minutedeg=((min+sec/60)*0.1*60);
+
+            //时针旋转角度
+            var hour=now.getHours()%12;
+            console.log("hour=>"+hour);
+            hourdeg=(hour+min*1.0/60)*30;
+
+        }
+        function clockrotate() {
+            secdegre+=6;
+            var divSecond=document.getElementsByClassName("second");
+            divSecond[0].style.transform="rotate(" +secdegre + "deg)";
+            minutedeg+=0.1;
+            var divminute=document.getElementsByClassName("minute");
+            divminute[0].style.transform="rotate("+minutedeg+"deg)";
+            //hourdeg+=360/(12*3600)
+            hourdeg+=0.008333;
+             var divhour=document.getElementsByClassName("hour");
+            divhour[0].style.transform="rotate("+hourdeg+"deg)";
+        }
+        setInterval("clockrotate()",1000);
+    </script>
+</head>
+<body onload="bodyload()">
+<div id="clock">
+    <div class="second">
+        <div class="sec_head"></div>
+    </div>
+    <div class="minute"></div>
+    <div class="hour"></div>
+</div>
+
+</body>
+</html>

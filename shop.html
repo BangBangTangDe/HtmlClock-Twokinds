@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>shop</title>
+    <style>
+        *{
+            margin:0px;
+            padding: 0px;
+
+        }
+        .main{
+            background: url("./imgs/gouwu.jpg") 0 0 no-repeat;
+            background-size: 100% 100%;
+            width: 1000px;
+            height:4500px;
+            margin:auto;
+            position: relative;
+        }
+        .plane2{
+            background: url("./imgs/plane2.jpg") 0 0 no-repeat;
+            background-size: 100% 100%;
+            width: 510px;
+            height:508px;
+            margin:auto;
+            position: absolute;
+            top:200px;
+            right:-300px;
+            z-index: -1;
+        }
+
+    </style>
+    <link rel="stylesheet" href="css/clockrotate.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/jquery.rotate.min.js"></script>
+    <script type="text/javascript">
+        var secdegre=0;
+        var minutedeg=0;
+        var hourdeg=0;
+        var palying=false;//是否播放
+        $(function bodyload() {
+            //秒针旋转角度
+            var now=new Date();
+            var sec =now.getSeconds();
+            secdegre=sec*6;
+            //分针旋转角度
+            var min=now.getMinutes();
+            console.log(min);
+            minutedeg=((min+sec/60)*0.1*60);
+
+            //时针旋转角度
+            var hour=now.getHours()%12;
+            console.log("hour=>"+hour);
+            hourdeg=(hour+min*1.0/60)*30;
+
+        })
+        function clockrotate() {
+            if(palying==true)
+            {
+                $("audio")[0].play();
+                $("audio")[0].volume=0.02;
+            }
+
+            secdegre+=6;
+            $(".second").rotate(
+                {
+                angle:secdegre,
+                center:[18.5 ,224]
+                });
+            minutedeg+=0.1;
+            $(".minute").rotate({
+                angle:minutedeg,
+                center:[18.5 ,224]
+            });
+            //hourdeg+=360/(12*3600)
+            hourdeg+=0.008333;
+            $(".hour").rotate(
+                {
+                angle:hourdeg,
+                center:[18.5 ,224]
+                }
+            );
+            $("#sound").click(function () {
+                palying=!palying;
+                if(palying) {
+                    $(this).removeClass("muteback");
+                    $(this).addClass("soundback");
+                }else
+                {
+                    $(this).addClass("muteback");
+                    $(this).removeClass("soundback");
+                }
+            })
+
+        }
+        setInterval("clockrotate()",1000);
+    </script>
+</head>
+<body>
+<div class="main">
+    <div class="plane2">
+        <div id="clock">
+    <div class="second">
+        <div class="sec_head"></div>
+    </div>
+    <div class="minute"></div>
+    <div class="hour"></div>
+    <div id="sound" class="muteback" style="display: none"></div>
+
+</div>
+    </div>
+
+
+</div>
+</body>
+</html>
